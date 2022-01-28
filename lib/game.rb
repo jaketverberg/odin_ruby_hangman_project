@@ -1,23 +1,41 @@
 class Game
-  def initialize
+  def initialize(choices, human)
+    @player = human
     @number_of_rounds = 12
-    #@answer = CSV File.sample if word is between 5 and 12 characters long
-    #@working_answer = @answer.length of "_"
+    @answer = pick_answer(choices)
+    @working_answer = create_working_answer(@answer)
+  end
+
+  def create_working_answer(word)
+    return_value = []
+    word.length.times { return_value << '_' }
+    return_value
+  end
+
+  def pick_answer(choices)
+    loop do
+      choice = choices.sample
+      if choice.length >= 5 || choice.length <= 12
+        choice.split(//)
+        return choice
+      end
+    end
   end
 
   def play
     loop do
-      player.guess_sequence
+      @player.guess_sequence
 
-      if player.has_won?
+      if @player.won?
         puts "#{player.name} guessed the sequence! Great job!"
-        puts "#{answer}"
+        puts @answer.to_s
         break
-      elsif player.has_lost?
+      elsif @player.lost?
         puts 'Ahhhh you ran out of turns. Beter luck next time.'
         break
       else
         @number_of_rounds -= 1
+        puts @number_of_rounds.to_s
       end
     end
   end
@@ -30,7 +48,7 @@ class Player
   def initialize
     puts "Let's play some old fashioned Hangman. What is your name?"
     @name = gets.chomp
-    @guesses = ""
+    @guesses = ''
   end
 
   def guess_sequence
@@ -38,15 +56,18 @@ class Player
     @guesses += gets.chomp
   end
 
-  def has_won?
-    player.guesses == @answer
+  def won?
+    @guesses == @answer
   end
 
-  def has_lost?
-    game.number_of_rounds == 0
+  def lost?
+    @number_of_rounds.zero?
   end
 end
 
-player = Player.new
+word_file = File.open('google-10000-english-no-swears.txt')
+word_choices = word_file.readlines.map(&:chomp)
 
-Game.new(player)
+human = Player.new
+
+Game.new(word_choices, human)
