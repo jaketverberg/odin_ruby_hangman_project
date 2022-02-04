@@ -1,3 +1,5 @@
+require 'pry'
+
 class Game
   def initialize(choices, human)
     @player = human
@@ -14,7 +16,8 @@ class Game
 
   def pick_answer(choices)
     loop do
-      choice = choices.sample
+      choice = choices[rand(10_000)]
+      binding.pry
       if choice.length >= 5 && choice.length <= 12
         choice.split(//)
         return choice
@@ -65,9 +68,8 @@ class Player
   end
 end
 
-word_file = File.read('google-10000-english-no-swears.txt')
-word_choices = word_file.readlines.map(&:chomp)
+word_file = File.read('google-10000-english-no-swears.txt', chomp: true)
 
 human = Player.new
 
-Game.new(word_choices, human)
+Game.new(word_file, human)
