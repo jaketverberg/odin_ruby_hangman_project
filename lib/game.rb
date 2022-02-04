@@ -15,7 +15,7 @@ class Game
   def pick_answer(choices)
     loop do
       choice = choices.sample
-      if choice.length >= 5 || choice.length <= 12
+      if choice.length >= 5 && choice.length <= 12
         choice.split(//)
         return choice
       end
@@ -65,7 +65,7 @@ class Player
   end
 end
 
-word_file = File.open('google-10000-english-no-swears.txt')
+word_file = File.read('google-10000-english-no-swears.txt')
 word_choices = word_file.readlines.map(&:chomp)
 
 human = Player.new
