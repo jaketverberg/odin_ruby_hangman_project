@@ -19,9 +19,7 @@ class Game
   def pick_answer(choices)
     loop do
       choice = choices[rand(10_000)]
-      if choice.length >= 5 && choice.length <= 12
-        return choice.split(//)
-      end
+      return choice.split(//) if choice.length >= 5 && choice.length <= 12
     end
   end
 
