@@ -67,9 +67,10 @@ class Player
     @number_of_rounds.zero?
   end
 end
-
-word_file = File.read('google-10000-english-no-swears.txt', chomp: true)
+binding.pry
+word_file = File.read('google-10000-english-no-swears.txt')
+word_choices = word_file.split('/n')
 
 human = Player.new
 
-Game.new(word_file, human)
+Game.new(word_choices, human)
