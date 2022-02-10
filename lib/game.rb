@@ -1,4 +1,5 @@
 require 'pry'
+require_relative 'save'
 
 class Game
   attr_reader :answer, :number_of_rounds
@@ -76,16 +77,30 @@ class Player
   end
 
   def guess_sequence
-    puts "#{@name}, what is your guess?"
+    puts "#{@name}, what is your guess? Type 'save' to save your game"
+    user_input = gets.chomp.downcase
+
+    if user_input == 'save'
+      save_game
+    end
+
     until @guesses.length == 1
       @guesses = ''
-      @guesses += gets.chomp.downcase
+      @guesses += user_input
     end
   end
 end
 word_choices = File.readlines('google-10000-english-no-swears.txt', chomp: true)
 
 puts "Let's play some old fashioned Hangman."
-puts 'Rules are: You can only guess 1 letter at a time.'
+puts 'Would you like to: 1) Start a New Game'
+puts '                   2) Load a Saved Game'
+user_choice = gets.chomp
+
+until user_choice.include?('1', '2')
+  puts 'Not a choice, type a 1 or a 2'
+  user_choice = gets.chomp
+end
+
 human = Player.new
-Game.new(word_choices, human).play
+user_choice == '1' ? Game.new(word_choices, human).play : load_game
