@@ -1,4 +1,4 @@
-require 'pry'
+require_relative 'hangman'
 
 class Game
   attr_reader :answer, :number_of_rounds
@@ -57,7 +57,9 @@ class Game
 
   def play
     until won? || lost?
-      @player.guess_sequence
+      puts "#{@player.name} what is your guess? - Type 'save' to save"
+      player_input = gets.chomp.downcase
+      if player_input == save then save_game else @player.guess_sequence(player_input)
       check_guesses
       next_round
     end
@@ -75,17 +77,11 @@ class Player
     @guesses = ''
   end
 
-  def guess_sequence
-    puts "#{@name}, what is your guess?"
+  def guess_sequence(input)
+    @guesses = input
     until @guesses.length == 1
       @guesses = ''
       @guesses += gets.chomp.downcase
     end
   end
 end
-word_choices = File.readlines('google-10000-english-no-swears.txt', chomp: true)
-
-puts "Let's play some old fashioned Hangman."
-puts 'Rules are: You can only guess 1 letter at a time.'
-human = Player.new
-Game.new(word_choices, human).play
