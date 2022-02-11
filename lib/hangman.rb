@@ -4,17 +4,19 @@ require 'yaml'
 def save_game(current_game)
   filename = lint_filename
   return false unless filename
-  dump = YAML.dump(current_game) 
+
+  dump = YAML.dump(current_game)
   File.open(File.join(Dir.pwd, "/saved/#{filename}.yaml"), 'w') { |file| file.write dump }
   break
 end
 
 def lint_filename
   begin
-    filenames = Dir.pwd["/saved"]
+    filenames = Dir.pwd['/saved']
     puts 'What do you want to name your save file?'
     filename = gets.chomp
     raise "#{filename} already exists!" if filenames.include?(filename)
+
     filename
   rescue StandardError => e
     puts 'Are you sure you want to rewrite this file? (Y/N)'
@@ -23,25 +25,27 @@ def lint_filename
       puts 'Not one of the options, type "y" or "n"'
       prompt = gets.chomp
     end
+  end
 
-    if prompt == 'y' then filename else nil end
+  prompt == 'y' ? filename : nil
 end
 
 def load_game
   filename = choose_game
   saved_file = File.open(File.join(Dir.pwd, filename), 'r')
-  loaded_game = YAML.load(saved_file)
+  loaded_game = YAML.safe_load(saved_file)
   saved_file.close
   loaded_game
 end
 
 def choose_game
-  filenames = Dir.pwd["/saved"]
+  filenames = Dir.pwd['/saved']
   puts 'Choose your file:'
   filenames.each_with_index { |v, i| puts "#{i+1} #{v}" }
   file_choice = gets.chomp
+
   until filenames.include?(file_choice)
-    puts "That was not one of the saved files. Pick again."
+    puts 'That was not one of the saved files. Pick again.'
     file_choice = gets.chomp
   end
   file_choice
@@ -57,4 +61,4 @@ until ['1', '2'].include?(load_or_new)
 end
 
 word_choices = File.readlines('google-10000-english-no-swears.txt', chomp: true)
-if load_or_new == '1' then load_game else Game.new(word_choices, Player.new).play end
+load_or_new == '1' ? load_game : Game.new(word_choices, Player.new).play

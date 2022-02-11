@@ -59,7 +59,7 @@ class Game
     until won? || lost?
       puts "#{@player.name} what is your guess? - Type 'save' to save"
       player_input = gets.chomp.downcase
-      if player_input == save then save_game else @player.guess_sequence(player_input)
+      player_input == save ? save_game : @player.guess_sequence(player_input)
       check_guesses
       next_round
     end
