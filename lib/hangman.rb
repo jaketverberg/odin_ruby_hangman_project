@@ -19,7 +19,7 @@ def lint_filename
 
     filename
   rescue StandardError => e
-    puts 'Are you sure you want to rewrite this file? (Y/N)'
+    puts "#{e} Are you sure you want to rewrite this file? (Y/N)"
     prompt = gets.chomp.downcase
     until ['y', 'n'].include?(prompt)
       puts 'Not one of the options, type "y" or "n"'
