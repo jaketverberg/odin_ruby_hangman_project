@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'game'
 require 'yaml'
 
@@ -7,7 +9,7 @@ def save_game(current_game)
 
   dump = YAML.dump(current_game)
   File.open(File.join(Dir.pwd, "/saved/#{filename}.yaml"), 'w') { |file| file.write dump }
-  break
+  exit
 end
 
 def lint_filename
@@ -61,4 +63,4 @@ until ['1', '2'].include?(load_or_new)
 end
 
 word_choices = File.readlines('google-10000-english-no-swears.txt', chomp: true)
-load_or_new == '1' ? load_game : Game.new(word_choices, Player.new).play
+load_or_new == '2' ? load_game : Game.new(word_choices, Player.new).play
