@@ -4,7 +4,7 @@ Created as part of The Odin Project curriculum.
 
 ### Functionality
 
-Basic hangman game. 12 guesses to find the answer through the command line. The user has the option at the beginning to start a new game or to load a saved game. The user can also save a game in progress.
+Basic hangman game. 18 guesses to find the answer through the command line. The user has the option at the beginning to start a new game or to load a saved game. The user can also save a game in progress.
 
 ### Thoughts
 
