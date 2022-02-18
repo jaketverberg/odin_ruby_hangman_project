@@ -7,7 +7,7 @@ class Game
 
   def initialize(choices, human)
     @player = human
-    @number_of_rounds = 12
+    @number_of_rounds = 18
     @answer = pick_answer(choices)
     @working_answer = create_working_answer(@answer)
   end
