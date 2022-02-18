@@ -1,0 +1,19 @@
+--- !ruby/object:Game
+player: !ruby/object:Player
+  name: Jake
+  guesses: ''
+number_of_rounds: 6
+answer:
+- c
+- o
+- o
+- p
+- e
+- r
+working_answer:
+- _
+- o
+- o
+- _
+- e
+- _
