@@ -1,2 +1,2 @@
 language = "ruby"
-run = "hangman.rb"
+run = "ruby lib/game.rb"
